@@ -1,0 +1,15 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.bg-url {
+background: url('/images/33c1ef9e9a57ac68ee296e0b09c603da.png') no-repeat center center fixed;
+background-size: cover ;
+
+}
+
+body{
+    position: relative;
+}
+
+
