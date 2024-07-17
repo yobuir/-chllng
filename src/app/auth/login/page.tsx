@@ -82,8 +82,8 @@ const AuthForm: React.FC = () => {
 
 
     return (
-        <Flex gap="middle" align="start" vertical className="bg-[#E3E3E3]">
-            <Flex style={boxStyle} justify="center" align="center" vertical gap={20} className='bg-url'>
+        <Flex gap="middle" align="start" vertical className='bg-url'>
+            <Flex style={boxStyle} justify="center" align="center" vertical gap={20} className="bg-[#E3E3E3]/80" >
                 <div className="bg-white flex gap-6 flex-row   shadow-sm lg:w-[45%] w-[90%] rounded-lg">
                     <div className="bg-[#F4F5F6]  p-6 flex-1 lg:flex hidden flex-col justify-between rounded-lg">
                         <div>

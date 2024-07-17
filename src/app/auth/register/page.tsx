@@ -120,8 +120,8 @@ export default function AuthForm() {
     };
 
     return (
-        <Flex gap="middle" align="start" vertical className="bg-[#E3E3E3]">
-            <Flex style={boxStyle} justify="center" align="center" vertical gap={20} className='bg-url'>
+        <Flex gap="middle" align="start" vertical className="bg-url" >
+            <Flex style={boxStyle} justify="center" align="center" vertical gap={20} className='bg-[#E3E3E3]/80' >
                 <form onSubmit={handleSubmit}  className="bg-white flex gap-6 flex-row   shadow-sm lg:w-[45%] w-[90%] rounded-lg">
                     <div className="flex-1 p-6 flex  flex-col justify-between gap-6">
                         <div className="">
