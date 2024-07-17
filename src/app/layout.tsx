@@ -17,7 +17,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body><AntdRegistry>{children} </AntdRegistry></body>
+      <body className="relative"><AntdRegistry>{children} </AntdRegistry></body>
     </html>
   );
 } 

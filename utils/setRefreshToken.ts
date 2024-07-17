@@ -3,6 +3,6 @@ export function setRefreshToken() {
   const accessToken = localStorage.getItem('accessToken');
   if (refreshToken) {
     document.cookie = `refreshToken=${refreshToken}; path=/;`;
-    document.cookie = `accessToken=${refreshToken}; path=/;`;
+    document.cookie = `accessToken=${accessToken}; path=/;`;
   }
 }

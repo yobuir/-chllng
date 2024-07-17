@@ -1,22 +1,43 @@
+'use client'
+
 import Image from "next/image";
-import MainNav from '../../components/MainNav';
+import MainNav from '../../components/Other/HeaderNav/MainNav';
 import { FilterOutlined, SearchOutlined, SortAscendingOutlined } from '@ant-design/icons';
 import ProductList from "../../components/Product/ProductList";
-import StoreList from "../../components/Store/StoreList";
 import MainFooter from "../../components/MainFooter";
+import fetchProducts, { Product } from "../../utils/allProducts.utils";
+import { useEffect, useState } from "react";
+import StoreList from "../../components/Store/StoreList";
 
 export default function Home() {
-    const stores = [
-        {
-            id: 1, name: 'Awesome Shop 1', productsCount: 134, imageUrl: '/images/33c1ef9e9a57ac68ee296e0b09c603da.png'
-        },
-        {
-            id: 2, name: 'Awesome Shop 1', productsCount: 134, imageUrl: '/images/33c1ef9e9a57ac68ee296e0b09c603da.png'
-        },
-        {
-            id: 3, name: 'Awesome Shop 1', productsCount: 134, imageUrl: '/images/33c1ef9e9a57ac68ee296e0b09c603da.png'
-        }
-    ];
+    const [products, setProducts] = useState<Product[]>([]);
+    const [search, setSearch] = useState<string>("");
+    const [sortBy, setSortBy] = useState<string>("createdAt");
+    const [sortOrder, setSortOrder] = useState<string>("ASC");
+    const [filters, setFilters] = useState<{ pageNumber: number, recordsPerPage: number }>({ pageNumber: 1, recordsPerPage: 10 });
+    const [hasMore, setHasMore] = useState<boolean>(true);
+    
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const fetchedProducts = await fetchProducts({ ...filters, name: search, sortBy, sortOrder });
+                setProducts(prev => [...prev, ...fetchedProducts]);
+                setHasMore(fetchedProducts.length > 0);
+            } catch (error) {
+                console.error("Failed to fetch products", error);
+            }
+        };
+
+        fetchData();
+    }, [search, sortBy, sortOrder, filters]);
+
+    const loadMore = () => {
+        setFilters(prev => ({
+            ...prev,
+            pageNumber: prev.pageNumber + 1
+        }));
+    };
+
     return (
         <>
             <div className='bg-white pb-28'>
@@ -29,19 +50,21 @@ export default function Home() {
                                     <h1>Welcome to <span className='text-primary-lightgreen'>Mark8</span></h1>
                                 </div>
                                 <div className="text-gray-400">
-                                    <p>12,932 Products</p>
+                                    <p>{products.length} Products</p>
                                 </div>
                             </div>
                             <div className="flex justify-center items-center">
-                                <div className="items-center flex rounded  lg:w-[40%]  bg-gray-700 ">
+                                <div className="items-center flex rounded lg:w-[40%] bg-gray-700 ">
                                     <div className='px-4 pr-0 text-lg text-primary-lightgreen'>
                                         <SearchOutlined />
                                     </div>
                                     <div className="flex-1">
                                         <input
                                             type="text"
-                                            placeholder="Search a store"
-                                            className="w-full  border-none rounded-lg bg-transparent focus:outline-none focus:ring-0 text-white  p-4"
+                                            placeholder="What are you looking for?"
+                                            className="w-full border-none rounded-lg bg-transparent focus:outline-none focus:ring-0 text-white p-4"
+                                            value={search}
+                                            onChange={(e) => setSearch(e.target.value)}
                                         />
                                     </div>
                                     <div className='px-4'>
@@ -57,30 +80,37 @@ export default function Home() {
                             </div>
                         </div>
                     </section>
-                    <nav className='w-full  flex justify-between items-center mt-8'>
+                    <nav className='w-full flex justify-between items-center mt-8'>
                         <div className="flex items-center gap-2 ">
                             <div>
                                 <Image src="icons/delivery-box-01.svg" width={25} height={25} alt="Product image" />
                             </div>
-                            <div className='font-bold'>Recent products (100)</div>
+                            <div className='font-bold'>Recent products ({products.length})</div>
                         </div>
                         <div className="flex text-lg items-center justify-center gap-3">
-                            <div className="border rounded px-3 py-1"> <FilterOutlined /></div>
-                            <div className="border  rounded px-3 py-1"> <SortAscendingOutlined /></div>
+                            <div className="border rounded px-3 py-1" onClick={() => setSortBy(sortBy === 'name' ? 'createdAt' : 'name')}> <FilterOutlined /></div>
+                            <div className="border rounded px-3 py-1" onClick={() => setSortOrder(sortOrder === 'ASC' ? 'DESC' : 'ASC')}> <SortAscendingOutlined /></div>
                         </div>
                     </nav>
                     <section className="flex flex-col lg:flex-row gap-3 mt-8">
                         <div className="">
-                            <ProductList />
+                            <ProductList products={products} />
+                            {hasMore && (
+                                <button onClick={loadMore} className="mt-4 px-6 py-3 text-black border border-gray-400 rounded-lg hover:bg-white hover:border-primary-lightgreen hover:text-primary-lightgreen font-bold">
+                                    Load More
+                                </button>
+                            )}
                         </div>
-                        <div className="flex justify-center items-center ">
-                            <StoreList stores={stores} />
+                        <div className="fle ">
+                            <div className="flex">
+                                <StoreList />
+                            </div>
                         </div>
+
                     </section>
                 </main>
             </div>
             <MainFooter />
         </>
-       
     );
 }

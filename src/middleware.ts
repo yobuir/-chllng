@@ -17,7 +17,7 @@ export async function middleware(req: NextRequest) {
       });
 
       const data = await response.json();
-        
+          
     
       if (response.ok && data.status === 0) {
         const newAccessToken = data.data.accessToken;
@@ -44,5 +44,5 @@ export async function middleware(req: NextRequest) {
 }
 
 export const config = {
-  matcher: ['/'],
+  matcher: ['/','/saved','/product', '/product/:id*'],
 };

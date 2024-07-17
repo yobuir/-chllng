@@ -1,9 +1,18 @@
+'use client';
 import { InstagramOutlined, LinkedinOutlined, MailOutlined, XOutlined, YoutubeOutlined } from '@ant-design/icons';
 import Image from 'next/image';
 import Link from 'next/link';
 import React from 'react';
+import ButtonPrimary from './Form/ButtonPrimary';
+
+const customButtonStyles: React.CSSProperties = {
+
+}
 
 const MainFooter = () => {
+    const handleClick = () => {
+
+    }
     return (
         <div className='w-full mt-12 flex flex-col gap-6'>
             <div className="w-full flex flex-col lg:px-20 p-1">
@@ -17,10 +26,10 @@ const MainFooter = () => {
                                 <MailOutlined />
                             </span>
                             <input type="email" className="pl-10 pr-4 py-2 w-full rounded-lg bg-gray-200 border border-gray-300 focus:outline-none focus:ring-2 focus:ring-lime-500 focus:border-transparent" placeholder="Enter your Email" />
+                        </div> 
+                        <div className="">
+                            <ButtonPrimary buttonStyle={customButtonStyles} type="submit" onClick={handleClick}> Submit →</ButtonPrimary>
                         </div>
-                        <button className="px-6 py-2 bg-lime-500  font-semibold rounded-lg hover:bg-lime-600 transition duration-200">
-                            Submit →
-                        </button>
                     </div>
                 </div>
             </div>

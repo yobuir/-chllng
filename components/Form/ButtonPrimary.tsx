@@ -8,7 +8,7 @@ interface ButtonPrimaryProps {
 
 const ButtonPrimary: React.FC<ButtonPrimaryProps> = ({ type, onClick, children, buttonStyle }) => {
     return (
-        <button type={type} className='rounded-lg p-6 py-3 bg-primary-lightgreen' onClick={onClick}  >
+        <button type={type} className='rounded-lg px-4 py-2 hover:text-white  bg-primary-lightgreen' onClick={onClick}  >
             {children}
         </button>
     );

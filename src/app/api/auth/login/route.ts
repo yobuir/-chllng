@@ -12,7 +12,7 @@ const options = {
   };
  
   try {
-        const response = await fetch(`${process.env.BASE_URL}/auth/login`, options);
+        const response = await fetch(`https://api.mark8.awesomity.rw/auth/login`, options);
 
     const data = await response.json();   
     return new Response(JSON.stringify(data));
